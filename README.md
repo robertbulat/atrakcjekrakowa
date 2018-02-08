@@ -11,3 +11,5 @@ Aplikacja internetowa Atrakcje Krakowa - Projekt oparty o PHP w Zend Framework v
 - generowanie hash'y dla potrzeb projektu,
 
 Projekt częściowo oparty o materiały Stoyana Czernieszewskiego
+
+Aktualnie projekt z powodów technicznych został przeniesiony pod adres atrakcje.000webhostapp.com.
