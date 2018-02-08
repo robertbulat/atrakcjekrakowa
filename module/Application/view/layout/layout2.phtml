@@ -1,0 +1,176 @@
+<?= $this->doctype() ?>
+ <html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <?= $this->headTitle('Atrakcje krakowa')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+            ->prependStylesheet($this->basePath('css/style.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap/bootstrap-theme.min.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap/bootstrap.min.css'))
+            ->prependStylesheet($this->basePath('css/stackable/stacktable.css'))
+            ->prependStylesheet($this->basePath('fonts/pe-7s/css/pe-icon-7-stroke.css'))
+            ->prependStylesheet($this->basePath('css/flexbox.css'))
+            ->prependStylesheet($this->basePath('fonts/pe-7s/css/helper.css'))
+            ->prependStylesheet($this->basePath('fonts/font-awesome/css/font-awesome.css'))
+            ->prependStylesheet($this->basePath('fonts/font-awesome/css/font-awesome.min.css'))
+            ->prependStylesheet($this->basePath('css/iziModal/iziModal.css'))
+            ->prependStylesheet($this->basePath('css/webui-popover/jquery.webui-popover.css'))
+            ->prependStylesheet($this->basePath('fonts/ios-switcher/switcher.css'))
+
+        ?>
+
+        <!-- Scripts -->
+        <?= $this->headScript()
+            ->prependFile($this->basePath('js/webui-popover/jquery.webui-popover.js'))
+            ->prependFile($this->basePath('js/izimodal/iziModal.js'))
+            ->prependFile($this->basePath('js/frontend/frontend-mod.js'))
+            ->prependFile($this->basePath('js/stackable/stacktable.js'))
+            ->prependFile($this->basePath('js/bootstrap/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/jqueryvalidator/additional-methods.min.js'))
+            ->prependFile($this->basePath('js/jqueryvalidator/jquery.validate.min.js'))
+            ->prependFile($this->basePath('js/jquery/jquery-3.1.0.min.js'))
+
+        ?>
+    </head>
+    <body>
+    <div class="main">
+    <nav class="navbar navbar-inverse" id="navbar1">
+        <div class="container-fluid">
+            <div class="col-xs-12 col-sm-12 col-md-12 nopadding">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Atrakcje Krakowa</a>
+                    <button type="button" class="navbar-toggle nomargin" data-toggle="collapse" data-target="#myNavbar1">
+                        <span class="pe-7s-user text-menu-style"></span>
+                    </button>
+
+                    <button type="button" class="navbar-toggle nomargin" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="pe-7s-menu text-menu-style"></span>
+                    </button>
+                </div>
+            </div>
+        <div class="row nomargin collapse navbar-collapse" id="myNavbar">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="nav navbar-nav nomargin btn-block">
+                    <div class="input-group-btn select">
+                        <button class="btn button-1 dropdown-toggle rwd-text mobile-break" type="button" data-toggle="dropdown"><span class="selected">Wybierz</span>
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu option btn-block menu-style-1" role="menu">
+                            <li><a href="#" class="menu-style-1-links rwd-text" id="1">Stare miasto</a></li>
+                            <li><a href="#" class="menu-style-1-links rwd-text" id="2">Grzegórzki</a></li>
+                            <li><a href="#" class="menu-style-1-links rwd-text" id="3">Prądnik czerwony</a></li>
+                            <li><a href="#" class="menu-style-1-links rwd-text" id="4">Wszystkie</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="row nomargin">
+                    <div class="nav navbar-nav nomargin btn-block mobile-break">
+                            <button class="btn btn-block button-2 rwd-text">
+                                Losuj
+                            </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 mobile-break">
+                <div class="row nomargin">
+                    <div class="nav navbar-nav btn-block nomargin">
+                        <div>
+                            <button class="btn btn-block table-1-button rwd-text">
+                                Tablica Wyników
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3" id="login-big">
+                <div class="nav navbar-nav navbar-right nomargin btn-block mobile-break">
+                    <div class="dropdown row reset-row">
+                        <button class="btn btn-hamburger dropdown-toggle hamburger" type="button" data-toggle="dropdown">
+                            <i class="pe-7s-info rwd-text"></i>
+                        </button>
+                        <div class="dropdown-menu menu-style-1 btn btn-block">
+                            <button class="btn btn-block button-1" data-toggle="modal" data-target="#loginRegister"><span class="fa pe-7s-add-user"></span>&nbsp;&nbsp;Rejestracja</button>
+                            <button class="btn btn-block button-1" data-toggle="modal" data-target="#loginModal"><span class="fa fa-user"></span>&nbsp;&nbsp;Zaloguj</button>
+                            <button class="btn btn-block button-1" data-toggle="modal" data-target="#loginModal"><span class="fa fa-user-circle"></span>&nbsp;&nbsp;Moje konto</button>
+                            <button class="btn btn-block button-1" data-toggle="modal" data-target="#logoutModal"><span class="fa fa-lock"></span>&nbsp;&nbsp;Wyloguj</a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row nomargin collapse navbar-collapse" id="myNavbar1">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="nav navbar-nav nomargin btn-block">
+                    <div class="dropdown">
+                        <button class="btn button-1 dropdown-toggle rwd-text mobile-break" type="button" data-toggle="dropdown">
+                            <span class="fa pe-7s-add-user"></span>&nbsp;&nbsp;Rejestracja</button>
+                    </div>
+                    <button class="btn button-1 dropdown-toggle rwd-text mobile-break" type="button" data-toggle="dropdown">
+                        <span class="fa fa-user-circle"></span>&nbsp;&nbsp;Moje konto</button>
+                    <div class="dropdown">
+                        <button class="btn button-1 dropdown-toggle rwd-text mobile-break" type="button" data-toggle="dropdown">
+                            <span class="fa fa-user"></span>&nbsp;&nbsp;<a href="<?php echo $this->url('auth/default', array('controller' => 'Index', 'action' => 'logout'));?>">Zaloguj</a>
+                            </button>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn button-1 dropdown-toggle rwd-text mobile-break" type="button" data-toggle="dropdown">
+                            <span class="fa fa-lock"></span>&nbsp;&nbsp;Wyloguj</button>
+                        <ul class="dropdown-menu menu-style-1">
+                            <div class="login-style-1 btn btn-block">
+                                <div class="automargin col-sm-8 text-logout">
+                                    <span class="rwd-text">Czy na pewno chcesz się wylogować?</span>
+                                    <a href="<?php echo $this->url('auth/default', array('controller' => 'Index', 'action' => 'logout'));?>">Wyloguj</a>
+                                    <button type="button" class="btn btn-block btn-danger" name="log-in" id="log-in">Nie</button>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="modal" id="logoutModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content menu-style-1">
+                    <div class="modal-header modal-style">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Zamknij"><span class="modal-style" aria-hidden="true">×</span></button>
+                        <h4 >Wyloguj <i class="fa fa-lock"></i></h4>
+                    </div>
+                    <div class="modal-body modal-style">
+                        Czy na pewno chcesz się wylogować? <br /></p>
+                        <div class="actionsBtns">
+                            <form method="post" action="<?php echo $this->url('application/default', array('controller' => 'index', 'action' => 'logout'));?>">
+                                <input type="submit" class="btn btn-block button-2" value="Wyloguj">
+                            </form>
+                            <button class="btn btn-block btn-danger" data-dismiss="modal">Anuluj</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <?=$this->content;?>
+
+        <footer class="panel-footer footer-style rwd-text">
+            <div class="row nomargin">
+                <div class="col-xs-12 col-sm-6 col-md-3">
+
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="copyright">
+                        Copyright © 2017 Atrakcje Krakowa - Wszelkie prawa zastrzeżone.
+                    </div>
+                </div>
+            </div>
+        </footer>
+    <?=$this->inlineScript();?>
+    </body>
+</html>

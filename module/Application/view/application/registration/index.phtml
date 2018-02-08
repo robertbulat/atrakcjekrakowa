@@ -1,0 +1,370 @@
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('application/default', array('controller' => 'registration', 'action' => 'index')));
+$form->prepare();
+?>
+<h1 class="page-title-wrapper text-center margin-bottom-30 label-info padding-v-10 label-styled">
+    <span class="fa pe-7s-add-user">&nbsp;Rejestracja użytkownika</span>
+</h1>
+<div class="row pagepadding">
+    <?php echo $this->form()->openTag($form); ?>
+    <form method="post" name="registration" action="/auth/registration/index">
+    <div class="automargin col-xs-12 col-sm-6 col-lg-6">
+        <div class="form-group" id="username-div">
+            <label for="usr_name" class="login-label">Nazwa użytkownika</label></br>
+            <div>
+                <div id="icon-input">
+                </div>
+            <?php echo $this->formRow($form->get('usr_name')); ?>
+            </div>
+        </div>
+        <div class="form-group" id="usr_email_div" name="usr_email_div">
+            <label for="usr_email" class="login-label">Adres e-mail</label></br>
+            <div>
+                <div id="icon-input-1">
+                </div>
+                <?php echo $this->formRow($form->get('usr_email')); ?>
+            </div>
+        </div>
+            <div class="form-group">
+                <label for="name" class="login-label">Imię</label></br>
+                <?php echo $this->formRow($form->get('name')); ?>
+            </div>
+            <div class="form-group">
+                <label for="lastname" class="login-label">Nazwisko</label></br>
+                <?php echo $this->formRow($form->get('lastname')); ?>
+            </div>
+    </div>
+    <div class="automargin col-sm-6 col-lg-6 col-xs-12 margin-bottom-10">
+            <div class="form-group">
+                <label for="usr_password" class="login-label">Hasło</label></br>
+                <?php echo $this->formRow($form->get('usr_password')); ?>
+            </div>
+            <div class="form-group">
+                <label for="usr_password_confirm" class="login-label">Powtórz hasło</label></br>
+                <?php echo $this->formRow($form->get('usr_password_confirm')); ?>
+            </div>
+        <div class="form-group">
+            <label>
+            <span class="rwd-text registration-clause"> Oświadczam, że zapoznałem(am) się z <a href="/regulamin">Regulaminem</a> i go akceptuję.</span>
+                <div class="regular-checkbox" id="registration_clause" name="registration_clause">
+                    <?php echo $this->formRow($form->get('regulations_checkbox')); ?>
+                    <label for="regulations_checkbox"></label>
+                </div>
+            </label>
+        </div>
+            <div class="margin-bottom-10 captcha">
+                <?php echo $this->formRow($form->get('captcha')); ?>
+                <input type="hidden" class="hiddenRecaptcha required" name="hiddenRecaptcha" id="hiddenRecaptcha">
+<!--                <h5 class="page-title-wrapper text-center">Potwierdź, że nie jesteś robotem!</h5>-->
+            </div>
+            <div class="form-group">
+            <?php echo $this->formSubmit($form->get('submit')); ?>
+            <?php echo $this->form()->closeTag(); ?>
+            </div>
+    </div>
+    </form>
+</div>
+<script type="text/javascript">
+function recaptchaCallback() {
+        $('#hiddenRecaptcha').valid();
+};
+$(document).ready(function(){
+
+    //
+    $('[data-toggle="popover"]').popover();
+
+    function validateSignup() {
+
+        console.log('melex działa');
+        $.validator.addMethod(
+            "regex",
+            function (value, element, regexp) {
+                if (regexp.constructor != RegExp)
+                    regexp = new RegExp(regexp);
+                else if (regexp.global)
+                    regexp.lastIndex = 0;
+                return this.optional(element) || regexp.test(value);
+            },
+            "Please check your input."
+        );
+
+        $('#registration').validate(
+            {
+                highlight: function (element, errorClass, validClass) {
+                    return false;  // ensure this function stops
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    return false;  // ensure this function stops
+                },
+                onkeyup: false,
+                ignore: ".ignore",
+                validClass: "signup_valid_class",
+                errorClass: "signup_error_class",
+                rules:
+                    {
+
+                        usr_email:
+                            {
+                                required: true,
+                                email: true,
+                                regex: /^[A-Za-z0-9_]+\@[A-Za-z0-9_]+\.[A-Za-z0-9_]+/,
+                            },
+
+
+                        usr_password:
+                            {
+                                required: true,
+                                regex: /^[A-Za-z0-9_()]{8,30}$/,
+                            },
+
+                        usr_password_confirm:
+                            {
+                                required: true,
+                                regex: /^[A-Za-z0-9_()]{8,30}$/,
+                                equalTo: '#usr_password'
+                            },
+
+                        usr_name:
+                            {
+                                required: true,
+                                regex: /^[A-Za-z0-9_]{3,15}$/,
+                            },
+
+                        usr_firstname:
+                            {
+                                required: false,
+                                minlength: 2,
+                                maxlength: 100,
+                                regex: /[A-Za-z\s]{2,100}$/,
+                            },
+
+                        usr_lastname:
+                            {
+                                required: false,
+                                minlength: 2,
+                                maxlength: 100,
+                                regex: /[A-Za-z\s]{2,100}$/,
+                            },
+
+                        regulations_checkbox:
+                            {
+                                required: true,
+                            },
+
+                        hiddenRecaptcha: {
+                            required: function () {
+                                if (grecaptcha.getResponse() == '') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        }
+                    },
+                messages:
+                    {
+                        regulations_checkbox:
+                            {
+                                required: 'Potwierdź, że zapoznałeś się z regulaminem.',
+                            },
+
+                        usr_email:
+                            {
+                                required: 'Adres e-mail jest wymagany.',
+                                email: 'Wprowadzony adres e-mail jest niepoprawny.',
+                                regex: 'Wprowadzony adres e-mail jest niepoprawny.'
+                            },
+
+                        hiddenRecaptcha:
+                            {
+                                required: 'Potwierdź, że nie jesteś robotem.',
+                            },
+
+                        usr_name:
+                            {
+                                required: 'Nazwa użytkownika jest wymagana',
+                                regex: "Nazwa użytkownika musi składać się z co najmniej 3, a maksymalnie 15 znaków alfanumerycznych wyłączając znaki specjalne oprócz _."
+                            },
+
+                        usr_firstname:
+                            {
+                                regex: 'Imię może składać się wyłącznie z liter i spacji.'
+                            },
+
+                        usr_lastname:
+                            {
+                                regex: 'Nazwisko może składać się wyłącznie z liter i spacji'
+                            },
+
+                        usr_password:
+                            {
+                                required: 'Hasło jest wymagane.',
+                                regex: 'Hasło musi składać się z co najmniej 8 znaków, zawierać co najmniej jedną małą oraz jedną dużą literę, cyfrę oraz znak specjalny.'
+                            },
+
+                        usr_password_confirm:
+                            {
+                                required: 'Wprowadź ponownie swoje hasło.',
+                                equalTo: 'Wprowadzone hasła nie są identyczne!',
+                            },
+
+                    },
+
+                submitHandler: function (form) {
+                    return true;
+                },
+                errorPlacement: function (error, element) {
+                    if (element.attr("name") == "regulations_checkbox") {
+                        error.insertAfter("#registration_clause");
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+    }
+
+    $('#usr_email').focusin(function(){
+        emailcheck();
+        return false;
+    });
+
+
+    function emailcheck() {
+        var y_timer;
+        $("#usr_email").keyup(function () {
+            validateSignup();
+            clearTimeout(y_timer);
+            var email_address = $(this).val();
+
+            if ($('#usr_email').valid()) {
+                y_timer = setTimeout(function () {
+                check_email_ajax(email_address);
+                }, 1000);
+                return false;
+            }
+            else {
+                nocheck();
+                return false;
+            }
+        });
+
+        function nocheck() {
+            $('#icon-input-1').html('');
+        }
+
+        function check_email_ajax() {
+            $('#icon-input-1').html('<img src="/img/ajax-loader.gif" class="icon-input-loader" />');
+            var emailaddress = $('#usr_email').val();
+
+            $.ajax({
+                type: "POST",
+                dataType: 'json',
+                url: "emailaddress-search-ajax",
+                data: {emailaddress: emailaddress},
+                cache: false,
+                success: function (json) {
+                    if (json.addresses) {
+
+                        $('#icon-input-1').html('<img id="alert-popup" name="alert-popup" src="/img/alert.png" class="icon-input " />');
+                        $('#alert-popup').webuiPopover({title:'Uwaga!',content:'Adres e-mail już widnieje w naszej bazie danych',closeable:true, style: 'red', placement: 'left', width: '220px'});
+                    }
+                    else if (!json.addresses) {
+                        $('#icon-input-1').html('');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Status: " + textStatus);
+                    alert("Error: " + errorThrown);
+                }
+            });
+            return false;
+        }
+    }
+
+
+    $('#usr_name').focusin(function(){
+        usernamecheck();
+    });
+
+    function usernamecheck() {
+        var x_timer;
+        $("#usr_name").keyup(function () {
+
+            validateSignup();
+            clearTimeout(x_timer);
+            var user_name = $(this).val();
+
+            if($('#usr_name').valid()) {
+            x_timer = setTimeout(function () {
+                check_username_ajax(user_name);
+            }, 1000);
+            return false;
+            }
+            else
+            {
+                nocheck1();
+                return false;
+            }
+        });
+
+        function nocheck1()
+        {
+            $('#icon-input').html('');
+        }
+
+        function check_username_ajax() {
+            $('#icon-input').html('<img src="/img/ajax-loader.gif" class="icon-input-loader" />');
+            var username = $('#usr_name').val();
+
+            $.ajax({
+                type: "POST",
+                dataType: 'json',
+                url: "username-search-ajax",
+                data: {username: username},
+                cache: false,
+                success: function (json) {
+                    if (json.users) {
+                        $('#icon-input').html('<img src="/img/alert.png" id="useralert-popup" name="useralert-popup" class="icon-input" />');
+                        $('#useralert-popup').webuiPopover({title:'Uwaga!',content:'Nazwa użytkownika jest już zajęta',closeable:true, style: 'red', placement: 'left', width: '220px'});
+
+                    }
+                    else if (!json.users) {
+                        $('#icon-input').html('<img src="/img/success.png" id ="useralert-popup" name="useralert-popup" class="icon-input" />');
+                        $('#useralert-popup').webuiPopover({title:'Uwaga!',content:'Nazwa użytkownika jest wolna',closeable:true, style: 'success', placement: 'left', width: '220px'});
+
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Status: " + textStatus);
+                    alert("Error: " + errorThrown);
+                }
+            });
+
+        }
+
+        return false;
+    }
+
+    $('#usr_email').focusin(function()
+    {
+        validatecheck();
+    });
+
+    function validatecheck() {
+        //
+        var z_timer;
+
+        $(this).keyup(function () {
+
+            validateSignup();
+            clearTimeout(z_timer);
+            z_timer = setTimeout(function () {
+                validateSignup();
+            }, 1000);
+        });
+    }
+
+    //
+});
+</script>

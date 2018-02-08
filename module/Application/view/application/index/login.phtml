@@ -1,0 +1,72 @@
+<h1 class="page-title-wrapper text-center margin-bottom-30 label-info padding-v-10 label-styled">
+Logowanie
+</h1>
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('application/default', array('controller' => 'index', 'action' => 'login')));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+
+?>
+<?php // view helper
+if ($user = $this->identity()) {
+    ?>
+    <div class="text-center"><span class="label label-primary rwd-text nofloat automargin">
+    <?php echo 'Zalogowano jako ' . $this->escapeHtml($user->usr_name);
+    ?>
+    | <a class="btn-warning" href="<?php echo $this->url('application/default', array('controller' => 'index', 'action' => 'logout'));?>"><?php echo $this->translate('Wyloguj'); ?></a>
+    </span>
+    </div>
+        <?php
+} else {
+?>
+<div id="div-login" class="row nomargin">
+    <div class="col-sm-8 col-lg-5 col-xs-12 col-md-8 automargin nofloat">
+        <form id="auth" name="auth" method="post" action="/application/index/login">
+            <div class="form-group">
+                <label for="username" class="login-label">Użytkownik</label></br>
+                <?php echo $this->formRow($form->get('usr_name')); ?>
+             </div>
+            <div class="form-group">
+                <label for="username" class="login-label">Hasło</label></br>
+                <?php echo $this->formRow($form->get('usr_password')); ?>
+            </div>
+            <?php
+        if (!empty($this->escapeHtml($this->messages)))
+        {
+            echo '<div class="panel btn-block btn-danger">' . $this->escapeHtml($this->messages) . '</div>';
+        }
+        ?>
+            <div class="form-group">
+                <label>
+                <label>
+                    <div class="regular-checkbox" id="registration_clause" name="registration_clause">
+                    <?php echo $this->formRow($form->get('rememberme')); ?>
+                    <label for="rememberme"></label>
+                </div>
+                </label>Zapamiętaj mnie</span>
+                </label>
+                </br>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formSubmit($form->get('submit')); ?>
+            </div>
+            <?php echo $this->form()->closeTag();?>
+        </form>
+    </div>
+</div>
+<div class="panel-title">
+    <?
+    }
+    ?>
+    <?php if (!$user = $this->identity())
+    { ?>
+        <p>
+            <a href="<?php echo $this->url('application/default', array('controller' => 'registration', 'action' => 'index'));?>"><?php echo $this->translate('Zarejestruj się'); ?></a> |
+            <a href="<?php echo $this->url('application/default', array('controller' => 'registration', 'action' => 'forgotten-password'));?>"><?php echo $this->translate('Zapomniałeś hasła?'); ?></a>
+        </p>
+    <?php }
+    ?>
+</div>
+    <div class=""></div>
